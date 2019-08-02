@@ -9,51 +9,52 @@ limitation, damages for loss of business profits, business interruption, loss of
 other pecuniary loss) arising out of the use of or inability to use the sample scripts or documentation, 
 even if Microsoft has been advised of the possibility of such damages. 
 #>
+
 param(
-    [string]$subscriptionId,    #subscription ID of recovery services vault
-    [string]$TenantId,          #AAD Tenant ID
-    [string]$clientId,          #ClientID is the Client ID from the App registration in AzureAD
-    [string]$ClientSecret,      #ClientSecret is the secret from the App registration in Azure AD 
-    [string]$resourceGroupName, #Recovery services Vault resource group name
-    [string]$VaultName          #Recovery services Vault name
+    [string]$TenantID,    #TenantID to scan for recovery services vaults
+    [object]$AuthorizationToken,
+    [int]$HoursAgo=48
 )
 
-#Get Authorization token
-$RequestAccessTokenUri = "https://login.microsoftonline.com/$TenantId/oauth2/token"
-$Resource = "https://management.core.windows.net/"
-$body = "grant_type=client_credentials&client_id=$ClientId&client_secret=$ClientSecret&resource=$Resource"
-$Token = Invoke-RestMethod -Method Post -Uri $RequestAccessTokenUri -Body $body -ContentType 'application/x-www-form-urlencoded'
+write-host "showing result of all backup jobs in the last $HoursAgo hours for all subscriptions in the tenant $TenantID"
 
-if($null -eq $Token){throw "token not obtained - exiting"}
+function call-AzureRestAPI
+{
+    param([string]$APIPath,[string]$APIParameters,[object]$Header)
+    $RestApiURL = "https://management.azure.com/$($apipath)?$($APIParameters)"
+    write-verbose $RestApiURL -verbose #remove the -Verbose for this to stop showing the yellow Verbose output
+    $ApiResponse = Invoke-RestMethod -Method GET -Uri $RestApiURL -Headers $Headers
+    $ApiResponse.value
+}
 
 $Headers = @{}
-$Headers.Add("Authorization","$($Token.token_type) "+ " " + "$($Token.access_token)")
+$Headers.Add("Authorization","$($AuthorizationToken.token_type) "+ " " + "$($AuthorizationToken.access_token)")
 
-write-host "Get-RecoveryServicesVaults:"
-$ApiURL = "https://management.azure.com/subscriptions/$($subscriptionId)/resourceGroups/$($resourceGroupName)/providers/Microsoft.RecoveryServices/vaults/$($vaultName)?api-version=2016-06-01"
-$ApiResponse = Invoke-RestMethod -Method Get -Uri $ApiURL -Headers $Headers
-#uncomment the folowing line to see more possible outputs instead of what I have filtered to
-#$ApiResponse | ConvertTo-Json -Depth 3 | Write-host
-$ApiResponse  | ft name,location,type |out-string|write-host
+$SubscriptionIDs = (call-AzureRestAPI -Header $header -APIPath '/subscriptions' -APIParameters 'api-version=2016-06-01').id
 
-write-host "Get-AzureRmRecoveryServicesBackupContainer:"
-$ApiURL = "https://management.azure.com/subscriptions/$($subscriptionId)/resourceGroups/$($resourceGroupName)/providers/Microsoft.RecoveryServices/vaults/$($vaultName)/backupProtectionContainers?%24filter=backupManagementType%20eq%20%27AzureIaasVM%27&api-version=2016-06-01"
-$ApiResponse = Invoke-RestMethod -Method Get -Uri $ApiURL -Headers $Headers
-#uncomment the folowing line to see more possible outputs instead of what I have filtered to
-#$ApiResponse | ConvertTo-Json -Depth 3 | Write-host
-$ApiResponse.value | ft name,type |out-string |write-host
+write-host "get backup jobs over last $HoursAgo hours:"
+$startTime=get-date $(get-date).touniversaltime().addHours(0-$HoursAgo) -uFormat "%Y-%m-%d %r" 
+$endTime=get-date $(get-date).touniversaltime() -uFormat "%Y-%m-%d %r" 
 
-write-host "Get-AzureRmRecoveryServicesBackupItem:"
-$ApiURL = "https://management.azure.com/subscriptions/$($subscriptionId)/resourceGroups/$($resourceGroupName)/providers/Microsoft.RecoveryServices/vaults/$($vaultName)/backupProtectedItems?api-version=2017-07-01"
-$ApiResponse = Invoke-RestMethod -Method Get -Uri $ApiURL -Headers $Headers
-#uncomment the folowing line to see more possible outputs instead of what I have filtered to
-#$ApiResponse | ConvertTo-Json -Depth 3 | Write-host
-$ApiResponse.value.properties | ft containerName,policyName,friendlyName,protectionStatus,lastBackupStatus,lastRecoveryPoint |out-string |write-host
+$Result = foreach($SubscriptionID in $SubscriptionIDs)
+{
+    $oDatafilter = "resourceType eq 'Microsoft.RecoveryServices/vaults'"  
+    $UrlEncodedoDataFilter = [System.Web.HttpUtility]::UrlEncode($oDatafilter) 
 
-write-host "Get-AzureRmRecoveryServicesBackupJob:"
-$ApiURL = "https://management.azure.com/subscriptions/$($subscriptionId)/resourceGroups/$($resourceGroupName)/providers/Microsoft.RecoveryServices/vaults/$($vaultName)/backupJobs?api-version=2017-07-01"
-$ApiResponse = Invoke-RestMethod -Method Get -Uri $ApiURL -Headers $Headers
-#uncomment the folowing line to see more possible outputs instead of what I have filtered to
-#$ApiResponse | ConvertTo-Json -Depth 3 | Write-host
-$ApiResponse.value.properties | ft entityFriendlyName,operation,status,duration,startTime,endTime |out-string |write-host
+    $ApiParameters = "api-version=2019-05-10&`$filter=$UrlEncodedoDataFilter"
+    $ResourceIDs = (call-AzureRestAPI -Header $header -APIPath "$subscriptionid/resources" -APIParameters $ApiParameters).id
 
+    foreach($ResourceID in $ResourceIDs)
+    {
+        $oDatafilter = "operation eq 'Backup' and startTime eq '$startTime' and endTime eq '$endTime'"  
+        $UrlEncodedoDataFilter = [System.Web.HttpUtility]::UrlEncode($oDatafilter) 
+        $ApiParameters = "api-version=2017-07-01&`$filter=$UrlEncodedoDataFilter"
+
+        $BackupJobs = (call-AzureRestAPI -Header $header -APIPath "$ResourceID/backupJobs" -APIParameters $ApiParameters)
+        $BackupJobs
+    }
+}
+
+$result.properties | ft backupManagementType,entityFriendlyName,operation,status,startTime,endTime
+#uncomment for more details - including vault resource ID
+#$result | convertto-json -Depth 3
