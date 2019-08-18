@@ -17,12 +17,12 @@ param(
 function call-AzureRestAPI
 {
     param([string]$APIPath,[string]$APIParameters,[object]$Header,[string]$method='GET',[string]$Requestbody='')
-    $RestApiURL = "https://management.azure.com/$($apipath)?$($APIParameters)"
+    $RestApiURL = "https://management.azure.com$($apipath)?$($APIParameters)"
     if($method -eq 'GET'){
-        write-verbose $RestApiURL -verbose #remove the -Verbose for this to stop showing the yellow Verbose output
+        write-verbose "$method - $RestApiURL" -verbose #remove the -Verbose for this to stop showing the yellow Verbose output
         $ApiResponse = Invoke-RestMethod -Method $Method -Uri $RestApiURL -Headers $Headers 
     }else{
-        write-verbose $RestApiURL -verbose #remove the -Verbose for this to stop showing the yellow Verbose output
+        write-verbose "$method - $RestApiURL" -verbose #remove the -Verbose for this to stop showing the yellow Verbose output
         #Write-Verbose $Requestbody -Verbose
         #$Headers | convertto-json -depth 5 | write-verbose -Verbose
         $ApiResponse = Invoke-RestMethod -Method $Method -Uri $RestApiURL -Headers $Headers -Body $Requestbody -ContentType "application/json"
@@ -50,30 +50,55 @@ $BodyObject=@{
 }       
 $Requestbody = $BodyObject | convertto-json -Depth 10
 
+<#
 write-host -ForegroundColor Cyan 'Testing API ManagementGroups cost management'
 $ManagementGroupId='RestTest'
-$scope = "providers/Microsoft.Management/managementGroups/$($ManagementGroupId)"
+$scope = "/providers/Microsoft.Management/managementGroups/$($ManagementGroupId)"
 $ApiParameters = "api-version=2019-01-01"
 $result = (call-AzureRestAPI -Header $header -APIPath "$($scope)/providers/Microsoft.CostManagement/query" -APIParameters $ApiParameters -method 'POST' -requestBody $Requestbody  -Verbose)
 $result | ConvertTo-Json -Depth 5 | write-host
+#>
 
+<#
 write-host -ForegroundColor Cyan 'Testing API for Resource Groups cost management'
-$scope = "subscriptions/92feddf2-3895-421d-a564-98a43783608e/resourceGroups/testRsvApi"
+$scope = "/subscriptions/92feddf2-3895-421d-a564-98a43783608e/resourceGroups/testRsvApi"
 $ApiParameters = "api-version=2019-01-01"
 $result = (call-AzureRestAPI -Header $header -APIPath "$($scope)/providers/Microsoft.CostManagement/query" -APIParameters $ApiParameters -method 'POST' -requestBody $Requestbody  -Verbose)
 
 $result | ConvertTo-Json -Depth 5 | write-host
+#>
 
-
+Write-verbose -verbose 'Get list of management groups'
 $ManagementGroupId='RestTest'
-$APIPath = "providers/Microsoft.Management/managementGroups"
+$APIPath = "/providers/Microsoft.Management/managementGroups"
 $ApiParameters = "api-version=2018-03-01-preview"
 $result = (call-AzureRestAPI -Header $header -APIPath $APIPath -APIParameters $ApiParameters -method 'GET' -Verbose)
+#$result | ConvertTo-Json -Depth 5 | write-host
 
-$result | ConvertTo-Json -Depth 5 | write-host
+$ManagementGroupIDs = $result.value |%{$_.id}
+
+Foreach($ManagementGroupID in $ManagementGroupIDs){
+    Write-verbose -verbose "Get subscriptions in management group $ManagementGroupID"
+    $APIPath = "$ManagementGroupID/descendants"
+    $ApiParameters = "api-version=2018-03-01-preview"
+    $result = (call-AzureRestAPI -Header $header -APIPath $APIPath -APIParameters $ApiParameters -method 'GET'  -Verbose)
+#    $result | ConvertTo-Json -Depth 5 | write-host
+    
+    $SubUrlIDs = $result.value | %{$_.id}
+
+    foreach($SubUrlID in $SubUrlIDs){
+        Write-verbose -verbose "Get cost details for subscription $SubUrlID"
+        $ApiParameters = "api-version=2019-01-01"
+        $APIPath = "$SubUrlID/providers/Microsoft.CostManagement/query"
+        $result = (call-AzureRestAPI -Header $header -APIPath $APIPath -APIParameters $ApiParameters -method 'POST' -requestBody $Requestbody  -Verbose)
+        $result | ConvertTo-Json -Depth 5 | write-host
+    }
+    
+}
+<#
+Write-verbose -verbose "Get subscriptions in management group "
 $Part1 = $result.value[0].id 
 $part2 = '/descendants'
-
 $APIPath = "$Part1$Part2"
 $ApiParameters = "api-version=2018-03-01-preview"
 $result = (call-AzureRestAPI -Header $header -APIPath $APIPath -APIParameters $ApiParameters -method 'GET'  -Verbose)
@@ -88,6 +113,7 @@ foreach($scope in $SubUrlIDs){
     
     $result | ConvertTo-Json -Depth 5 | write-host
 }
+#>
 <#
 $ManagementGroupId='RestTest'
 $scope = "providers/Microsoft.Management/managementGroups/$($ManagementGroupId)"
