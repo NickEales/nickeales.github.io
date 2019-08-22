@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>Nick Eales’ blog | Hoping to save someone some time (including myself)</title>
+<meta name="generator" content="Jekyll v3.8.5" />
+<meta property="og:title" content="Nick Eales’ blog" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Hoping to save someone some time (including myself)" />
+<meta property="og:description" content="Hoping to save someone some time (including myself)" />
+<link rel="canonical" href="http://localhost:4000/Use_Custom_Script_Extension_to_Sysprep_an_Azure_VM.html" />
+<meta property="og:url" content="http://localhost:4000/Use_Custom_Script_Extension_to_Sysprep_an_Azure_VM.html" />
+<meta property="og:site_name" content="Nick Eales’ blog" />
+<script type="application/ld+json">
+{"@type":"WebPage","headline":"Nick Eales’ blog","url":"http://localhost:4000/Use_Custom_Script_Extension_to_Sysprep_an_Azure_VM.html","description":"Hoping to save someone some time (including myself)","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=933e36d4e6f3b8b4501aadae563ecd1d2366fb36">
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="http://localhost:4000/">Nick Eales’ blog</a></h1>
+      
+
+      
+<p>I wanted to run sysprep on a Azure VM to create an image, hopefully without needing to login / connect directly to the VM.</p>
+
+<ol>
+  <li>
+    <p>create a powershell script file, and save it to a new file ‘sysprep.ps1’:
+     param([switch]$runSysprep=$false)
+     write-output “Sysprep Script Run, parameter ‘runSysprep’: $runSysprep”</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> if($runSysprep){
+ write-output "starting Sysprep"
+ Start-Process -FilePath C:\Windows\System32\Sysprep\Sysprep.exe -ArgumentList '/generalize /oobe /shutdown /quiet'
+ write-output "started Sysprep"
+ }else{
+ write-output "skipping Sysprep"
+ }
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>upload this to a storage account, set the security on the container to ‘blob’ (there’s nothing sensitive in that script), then ran the following:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $VMName =  'vmName'
+ $VMRG = 'vmResourceGroup'
+ $VMLocation = 'AustraliaEast'
+ $ExtensionName = 'runsysprep'
+ $Scripturi = 'https://&lt;storageAccountName&gt;.blob.core.windows.net/templates/scripts/sysprep.ps1'
+ Set-AzureRmVMCustomScriptExtension -FileUri $ScriptURI -ResourceGroupName  $VMRG -VMName $VMName -Name $ExtensionName -Location $VMLocation -run './sysprep.ps1' -Argument '-runSysprep'
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>This gave the output:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    RequestId IsSuccessStatusCode StatusCode ReasonPhrase
+    --------- ------------------- ---------- ------------
+                            True         OK OK
+</code></pre></div></div>
+
+<p>To see the output messages from the script that was run:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    $status = Get-AzureRmVMDiagnosticsExtension -ResourceGroupName $VMRG -VMName $VMName -Name $ExtensionName -Status
+    $status.SubStatuses.message
+</code></pre></div></div>
+
+<p>This displayed the output that was expected:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Sysprep Script Run, parameter 'runSysprep': True\nstarting Sysprep\nstarted Sysprep
+</code></pre></div></div>
+
+<p>A short time later, the VM is shutdown (but is still allocated &amp; incurring charges), so i then shutdown the VM:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    Stop-AzureRmVM -Name $VMName -ResourceGroupName $VMRG  -force
+</code></pre></div></div>
+
+
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+    
+  </body>
+</html>
