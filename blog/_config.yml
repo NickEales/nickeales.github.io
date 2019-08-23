@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 title: Nick Eales’ blog
 description: Hoping to save someone some time (including myself)
-theme: jekyll-theme-primer
+theme: minima
 baseurl: "/blog" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
