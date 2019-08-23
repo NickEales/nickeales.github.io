@@ -1,10 +1,18 @@
 ---
 layout: post
 title:  "Get Private Certificate From KeyVault"
+description: "No longer working method of downloading a X509 Pkcs12 (Windows) private certificate from keyvault"
+excerpt_separator: <!--more-->
 date:   2017-06-26 21:42:46 +1000
 categories: Azure KeyVault Certificates PowerShell
 ---
-Getting a certificate from key vault using PowerShell – while it isn’t obvious also isn’t hard. I’m putting this sample code here for me to use as a reference – but feel free to use & adjust it as you want.
+Note: This method of method of downloading a X509 Pkcs12 (Windows) private certificate from keyvault no longer works.
+<!--more-->
+
+---
+
+~~Getting a certificate from key vault using PowerShell – while it isn’t obvious also isn’t hard.~~
+I’m putting this sample code here for me to use as a reference – but feel free to use & adjust it as you want.
 
 A few key points first about certificates in Key Vault.
 - BYO certificates when loaded into key vault are added using the *AzureKeyVaultCertificate* powershell cmdlets.

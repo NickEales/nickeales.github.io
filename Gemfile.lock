@@ -12,7 +12,12 @@ GEM
     amqp (1.8.0)
       amq-protocol (>= 2.2.0)
       eventmachine
-    bulma (0.1.0)
+    bulma-clean-theme (0.3)
+      jekyll (~> 3.8)
+      jekyll-feed (~> 0.11)
+      jekyll-paginate (~> 1.1)
+      jekyll-seo-tag (~> 2.5)
+      jekyll-sitemap (~> 1.2)
     coffee-script (2.4.1)
       coffee-script-source
       execjs
@@ -287,7 +292,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bulma
+  bulma-clean-theme
   github-pages
   jekyll-feed (~> 0.6)
   minima (~> 2.0)
