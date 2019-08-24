@@ -3,6 +3,8 @@ layout: default
 title: About
 permalink: /about/
 ---
+Hi - I'm Nick Eales, I work at Microsoft, based in Sydney Australia. For around 10 years until near the end of 2018 I worked in the Microsoft Premier Field Engineering team.
+
 
 This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
 
