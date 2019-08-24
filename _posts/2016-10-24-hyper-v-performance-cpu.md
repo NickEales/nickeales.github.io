@@ -16,7 +16,8 @@ There are four typical areas that you monitor in any server environment - CPU, D
 This post is going to focus on the CPU Performance counters - since they generate the most confusion. Later posts will address the other areas.
 
 ### Physical CPU utilization
-* Counter: Hyper-V Hypervisor Logical Processor(*)\%Total Run Time.
+
+* Counter: **Hyper-V Hypervisor Logical Processor(*)\%Total Run Time**
 * Threshold: (any instance) > 50% sustained for > 5 min)
 * What to do if threshold is exceeded:
     * If _Total meets this, identify sources of CPU load (sounds obvious but.. )
@@ -24,7 +25,8 @@ This post is going to focus on the CPU Performance counters - since they generat
     * If a small number of CPUs are impacted, but the busy CPU does vary, then check the two "% Guest Run Time" processor counters below.
 
 ### Management operating system CPU usage.
-* Counter: Hyper-V Hypervisor Root Virtual Processor(_Total)\% Guest Run Time.
+
+* Counter: **Hyper-V Hypervisor Root Virtual Processor(_Total)\% Guest Run Time**
 * Threshold (_Total instance) > 5% sustained for > 5 min
 * What: This measures the amount of physical CPU time spent running Hyper-V host OS virtual CPUs.
 * Why: The host OS doesn't compete for CPU time in Hyper-V. It always immediately gets any CPU time it needs, which is necessary to provide great performance for virtual machines. This means any unnecessary CPU usage in the host OS can have a significant negative performance impact on all virtual machines - which is why the guidance is to install as little as possible on the host OS (absolute minimum of agents, services & applications).
@@ -35,17 +37,19 @@ This post is going to focus on the CPU Performance counters - since they generat
     * For general administration, use remote management tools instead of locally or via RDP on the host.
 
 ### Virtual Machine Processor Usage
-* Counter: Hyper-V Hypervisor Virtual Processor(*)\% Guest Run Time.
+
+* Counter: **Hyper-V Hypervisor Virtual Processor(*)\% Guest Run Time**
 * Threshold (any instance) > 75%, sustained for > 10min
 * What: This measures the amount of physical CPU time each VM virtual CPU instance uses. Each virtual processor can only run on one physical CPU thread at a time.
 * Why: Unlike the Processor performance object and task manager inside a virtual machine, this accurately shows how much physical CPU time is being consumed by each VP.
 * What to do if threshold is exceeded:
-    * Check VMs have sufficient VP (consider adding one of more processors to the VM)
-    * Perform standard high CPU usage troubleshooting inside the VM as you would if it was a physical machine to reduce the CPU usage within the VM.
+  * Check VMs have sufficient VP (consider adding one of more processors to the VM)
+  * Perform standard high CPU usage troubleshooting inside the VM as you would if it was a physical machine to reduce the CPU usage within the VM.
 
 ### Physical CPU Context Switching
+
 * What: This measures the rate (number of times per second) each logical CPU changes what virtual processor it is running.
-* Counter: Hyper-V Hypervisor Logical Processor(*)\Context Switches/sec.
+* Counter: **Hyper-V Hypervisor Logical Processor(*)\Context Switches/sec**
 * Threshold: (any instance except for "_Total") > 20000, (sustained for > 5min).
 * Why: We use this as a general health & performance indicator for the host & virtual machines. This counter must be used in context with all other activity based counters (CPU, Disk & Network, latency & throughput).
 * What to do if threshold is exceeded:
