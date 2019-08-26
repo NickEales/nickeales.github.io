@@ -8,13 +8,13 @@ excerpt_separator: <!--more-->
 One of my customers recently had a frustrating time installing a VMM 2016 in a highly available configuration when using SQL Always on for the database. A standalone install into a highly available virtual machine does not meet their requirements. Due to the frustrations with getting this to work, I am sharing the steps we used.
 <!--more-->
 
-Assumptions:
+### Assumptions:
 
-Operating systems are already installed on at least four machines (SqlNode1, SqlNode2, VmmNode1, VmmNode2)
-Failover Clustering is configured so that SqlNode1 and SqlNode2 are in one cluster and VmmNode1 and VmmNode2 are in a different cluster.
-SQL Enterprise is installed and configured with always on capability enabled and a listener configured (SqlFMList). In our case, the listener was configured to listen on port 1771. SQL must be using port 1433 for a non-always on instance / database for this to work
+* Operating systems are already installed on at least four machines (SqlNode1, SqlNode2, VmmNode1, VmmNode2)
+* Failover Clustering is configured so that SqlNode1 and SqlNode2 are in one cluster and VmmNode1 and VmmNode2 are in a different cluster.
+* SQL Enterprise is installed and configured with always on capability enabled and a listener configured (SqlFMList). In our case, the listener was configured to listen on port 1771. SQL must be using port 1433 for a non-always on instance / database for this to work
 
-The installation steps we used
+### The installation steps we used
 
 1. Create the VMMService account (eg svc_vmmservice), and grant it permissions to
     * SQL on SqlNode1

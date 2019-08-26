@@ -54,4 +54,4 @@ sudo shutdown -h now
 1. Create VM template
 1. Make sure secure boot is disabled & VM Generation matches that used above.
 
-*Note: The above steps didn't work for me when using Ubuntu 17.04*
+### *Note: The above steps didn't work for me when using Ubuntu 17.04*
