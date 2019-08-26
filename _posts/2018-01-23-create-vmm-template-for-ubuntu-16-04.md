@@ -4,6 +4,7 @@ title:  "Create VMM template for Ubuntu 16.04"
 date:   2018-01-23 12:00:00 +1000
 categories: SCVMM Hyper-V VMM Ubuntu
 excerpt_separator: <!--more-->
+page.comments: true
 ---
 My personal notes for creating a Ubuntu 16.04 VMM template
 <!--more-->
