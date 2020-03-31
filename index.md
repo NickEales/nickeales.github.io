@@ -7,6 +7,7 @@ layout: default
 
 ## contents
 
+- (2020-03-31) - [Allow Azure VM to activate using Azure KMS when using Azure Firewall](./2020-03-31-Allow-Azure-VM-to-activate-using-Azure-KMS-when-using-Azure-Firewall.md)
 - (2018-02-14) - [install highly available scvmm 2016 using sql always on](./2018-02-14-install-highly-available-scvmm-2016-using-sql-always-on.md).
 - (2018-01-23) - [Create VMM template for ubuntu 16-04](./2018-01-23-create-vmm-template-for-ubuntu-16-04.md)
 - (2017-06-26) - [Get Private Certificate From KeyVault](./2017-06-26-Get-Private-Certificate-From-KeyVault.md)
