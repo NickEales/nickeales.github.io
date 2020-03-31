@@ -4,6 +4,8 @@ date:   2020-03-31 12:00:00 +1000
 ---
 # Allow Azure VM to activate using Azure KMS when using Azure Firewall
 
+By default the Azure firewall does not allow Azure VMs to access the Azure KMS server. There are arguements for and against this - however currently the firewall only lets traffic through if you let it. As the KMS server is outside your Azure virtual network, this functionality is blocked.
+
 ## assumptions
 
 1. routing within the vNet (by UDR or other) directs traffic destined for Azure KMS to the Azure Firewall.
