@@ -1,9 +1,10 @@
 ---
 layout: default
-title:  "Use Custom Script Extension to Sysprep an Azure VM"
 date:   2017-03-13 21:42:46 +1000
 categories: Azure KeyVault Certificates PowerShell
 ---
+# Use Custom Script Extension to Sysprep an Azure VM
+
 I wanted to run sysprep on a Azure VM to create an image, hopefully without needing to login / connect directly to the VM.
 
 1. create a powershell script file, and save it to a new file 'sysprep.ps1':
@@ -55,3 +56,5 @@ This displayed the output that was expected:
 A short time later, the VM is shutdown (but is still allocated & incurring charges), so i then shutdown the VM:
 
 `Stop-AzureRmVM -Name $VMName -ResourceGroupName $VMRG  -force`
+
+[Back](./index.md)

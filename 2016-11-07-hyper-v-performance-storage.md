@@ -1,10 +1,11 @@
 ---
 layout: default
-title:  "Hyper-V Performance – Storage"
 date:   2016-11-07 12:00:00 +1000
 categories: Hyper-V Performance Storage
 excerpt_separator: <!--more-->
 ---
+# Hyper-V Performance – Storage
+
 Storage performance is often the most impactful on the performance and responsiveness of Hyper-V virtual machines.
 <!--more-->
 This is a continuation of a series on Hyper-V performance monitoring. The previous post covered CPU performance, This post is on storage performance, and the remaining posts will cover memory and network.
@@ -87,3 +88,5 @@ This is a continuation of a series on Hyper-V performance monitoring. The previo
     * **Hyper-V Virtual Storage Device(*)\Write Operations/sec**
 
 As usual for any of my blog posts – if you have any feedback about any of the above, please provide it – that’s how I learn.
+
+[Back](./index.md)

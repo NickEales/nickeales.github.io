@@ -1,10 +1,11 @@
 ---
 layout: default
-title:  "Hyper-V Performance – Memory"
 date:   2016-11-22 12:00:00 +1000
 categories: Hyper-V Performance Memory
 excerpt_separator: <!--more-->
 ---
+# Hyper-V Performance – Memory
+
 Memory performance in Hyper-V environments is a mix of availability, ensuring Virtual Machines have the memory they need, and NUMA memory usage.
 <!--more-->
 This is a continuation of a series on Hyper-V performance monitoring. The previous posts covered CPU and storage performance, This post is on Memory performance, and the remaining post will cover network performance.
@@ -54,3 +55,5 @@ For virtual machines using dynamic memory, Hyper-V should maintain this at "100 
 
 
 As usual for any of my blog posts - if you have any feedback about any of the above, please provide it - that's how I learn.
+
+[Back](./index.md)

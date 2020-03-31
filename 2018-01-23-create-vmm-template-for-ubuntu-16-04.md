@@ -1,11 +1,12 @@
 ---
-layout: page
-title:  "Create VMM template for Ubuntu 16.04"
+layout: default
 date:   2018-01-23 12:00:00 +1000
 categories: SCVMM Hyper-V VMM Ubuntu
 excerpt_separator: <!--more-->
 page.comments: true
 ---
+# Create VMM template for Ubuntu 16.04
+
 My personal notes for creating a Ubuntu 16.04 VMM template
 <!--more-->
 
@@ -55,4 +56,6 @@ sudo shutdown -h now
 1. Create VM template
 1. Make sure secure boot is disabled & VM Generation matches that used above.
 
-### *Note: The above steps didn't work for me when using Ubuntu 17.04*
+## *Note: The above steps didn't work for me when using Ubuntu 17.04*
+
+[Back](./index.md)

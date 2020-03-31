@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title:  "OAuth using PowerShell and certificate Service Principal to Azure Function App"
 date:   2017-06-19 21:42:46 +1000
 categories: Azure Certificates PowerShell ServicePrincipal Oauth

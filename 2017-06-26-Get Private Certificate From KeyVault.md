@@ -1,12 +1,13 @@
 ---
-layout: post
-title:  "Get Private Certificate From KeyVault"
+layout: default
 description: "No longer working method of downloading a X509 Pkcs12 (Windows) private certificate from keyvault"
 excerpt_separator: <!--more-->
 date:   2017-06-26 21:42:46 +1000
 categories: Azure KeyVault Certificates PowerShell
 ---
-Note: This method of method of downloading a X509 Pkcs12 (Windows) private certificate from keyvault no longer works.
+# Get Private Certificate From KeyVault
+
+** Note: This method of method of downloading a X509 Pkcs12 (Windows) private certificate from keyvault no longer works.
 <!--more-->
 
 ---
@@ -63,3 +64,5 @@ anyway.. some code to get private certificates and make them available for a few
         [System.IO.File]::WriteAllBytes($pfxPath, $protectedCertificateBytes)
 
 While the above example is for getting a private certificate, getting a public certificate is similar & simpler. (use Get-AzureKeyVaultKey instead / a slight change to the flags if importing it locally / no need to encrypt if exporting to a .CER file).
+
+[Back](./index.md)

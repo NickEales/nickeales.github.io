@@ -34,3 +34,5 @@ This is a continuation of a series on Hyper-V performance monitoring. The previo
 I'm sure there are more counters that are relevant - if you have suggestions, please let me know (if they are storage related, please check that post first).
 
 As usual for any of my blog posts – if you have any feedback about any of the above, please provide it – that’s how I learn
+
+[Back](./index.md)

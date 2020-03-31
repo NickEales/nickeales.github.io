@@ -63,3 +63,5 @@ This post is going to focus on the CPU Performance counters - since they generat
 In a Hyper-V environment (Prior to Hyper-V 2019), please try to avoid using "Processor\% Processor Time" - for Hyper-V this does not measure physical CPU usage. This counter measures the amount of time the CPU is not idle within a specific operating system's view - and the timer that it uses for this calculation is dependent on exclusive use of the CPU - which is not the case in a Hyper-V environment. For similar reasons, please do not use "Processor\Processor Queue Length".
 
 As usual for any of my blog posts - if you have any feedback about any of the above, please provide it - that's how I learn.
+
+[Back](./index.md)

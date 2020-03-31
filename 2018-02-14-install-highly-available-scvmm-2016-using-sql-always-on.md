@@ -1,20 +1,21 @@
 ---
-layout: page
-title:  "Install highly available SCVMM 2016 using SQL Always On"
+layout: default
 date:   2018-02-14 12:00:00 +1000
 categories: SCVMM Hyper-V VMM
 excerpt_separator: <!--more-->
 ---
+# Install highly available SCVMM 2016 using SQL Always On
+
 One of my customers recently had a frustrating time installing a VMM 2016 in a highly available configuration when using SQL Always on for the database. A standalone install into a highly available virtual machine does not meet their requirements. Due to the frustrations with getting this to work, I am sharing the steps we used.
 <!--more-->
 
-### Assumptions
+## Assumptions
 
 * Operating systems are already installed on at least four machines (SqlNode1, SqlNode2, VmmNode1, VmmNode2)
 * Failover Clustering is configured so that SqlNode1 and SqlNode2 are in one cluster and VmmNode1 and VmmNode2 are in a different cluster.
 * SQL Enterprise is installed and configured with always on capability enabled and a listener configured (SqlFMList). In our case, the listener was configured to listen on port 1771. SQL must be using port 1433 for a non-always on instance / database for this to work
 
-### The installation steps we used
+## The installation steps we used
 
 1. Create the VMMService account (eg svc_vmmservice), and grant it permissions to
     * SQL on SqlNode1
@@ -68,3 +69,5 @@ Add the SQL database to the AG with the listener used in the above file (SqlFMLi
 Restart VMM. Check that VMM works with different combinations of which node VMM & SQL are on.
 
 The "Upgrade" setting in the ini file - is set to zero because in the initial installation to create the database, my customer also applied UR4. By default the installation appears to try to "upgrade" the database version if the versions don't match the expected version (2016 RTM) - since we were using a newer version, we had to tell it not to upgrade it.
+
+[Back](./index.md)
