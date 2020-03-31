@@ -1,10 +1,11 @@
 ---
 layout: default
-title:  "OAuth using PowerShell and certificate Service Principal to Azure Function App"
 date:   2017-06-19 21:42:46 +1000
 categories: Azure Certificates PowerShell ServicePrincipal Oauth
 excerpt_separator: <!--more-->
 ---
+# OAuth using PowerShell and certificate Service Principal to Azure Function App
+
 I needed a way to write PowerShell code to use a certificate backed service principal to use OAuth authentication when calling a web hook.
 <!--more-->
 
