@@ -16,7 +16,7 @@
 title: Nick Eales’ blog
 author: ""
 description: Hoping to save someone some time (including myself)
-theme: minima
+theme: jekyll-theme-midnight
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 #twitter_username: jekyllrb
