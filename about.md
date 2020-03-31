@@ -7,3 +7,5 @@ Hi - I'm Nick Eales, I work at Microsoft and I'm based in Sydney Australia. For 
 This blog is primarily as a location for me to document stuff so that I can find it again easily.. if it helps someone else, then that's great..  
 
 This blog was moved from the TechNet blogs site when it was retired.
+
+[Back](./index.md)
