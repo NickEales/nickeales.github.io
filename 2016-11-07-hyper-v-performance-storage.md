@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title:  "Hyper-V Performance – Storage"
 date:   2016-11-07 12:00:00 +1000
 categories: Hyper-V Performance Storage
@@ -9,7 +9,7 @@ Storage performance is often the most impactful on the performance and responsiv
 <!--more-->
 This is a continuation of a series on Hyper-V performance monitoring. The previous post covered CPU performance, This post is on storage performance, and the remaining posts will cover memory and network.
 
-### Disk Latency of the virtual machine storage from the host.
+## Disk Latency of the virtual machine storage from the host.
 
 * Why: Latency to the Virtual Machine data from Hyper-V is the most common cause of non-optimal virtual machine performance. It significantly helps to know what the normal range is in an specific environment before troubleshooting. This is the first (and for performance – the most important) storage counter to look at.
 * Counters:
@@ -30,7 +30,7 @@ This is a continuation of a series on Hyper-V performance monitoring. The previo
   * For local storage
     * Check local machine CPU (look for any single cores running 100%), and disk idle time
 
-### Disk Idle Time
+## Disk Idle Time
 
 * Why: This counter provides a clear measurement of what percentage of time the disk remained in idle state, meaning all the requests from the operating system to the disk have been completed and there is zero pending requests. Disk performance (and virtual machine responsiveness) will usually degrade significantly soon after this threshold is reached.
 * Counter: **Logical Disk(*)\% Idle Time** (any instance)
@@ -41,7 +41,7 @@ This is a continuation of a series on Hyper-V performance monitoring. The previo
   * Check storage load (MB/Sec and IOPS) vs baseline numbers.
   * Identify busy virtual machine virtual disks (see "Hyper-V Virtual Storage Device\Normalized Throughput" in this post), and consider redistributing the busy virtual machine virtual disks.
 
-### Disk Space
+## Disk Space
 
 * Why: It is very important to track disks running low on space. When the available space drive containing virtual machine storage falls too low, any operation that involves using more disk space will cause the virtual machine to have an outage and will show a status of "Paused-Critical" (visible in Hyper-V manager). The threshold chosen here should give ample warning before this outage occurs.
 * Counter: **Logical Disk(*)\Free Megabytes** (any instance other than "_Total" or "C:")
@@ -52,7 +52,7 @@ This is a continuation of a series on Hyper-V performance monitoring. The previo
 * What to do if threshold is exceeded:
   * Check for snapshots, differencing disks, Hyper-V Replica's (especially initial sync on targets), dynamic disks
 
-### Storage MB/sec
+## Storage MB/sec
 
 * Why: The host counters can be useful information when troubleshooting disk latency and idle time issues. For any shared storage where performance issues are being seen by any device accessing the storage, it is important to identify which host (or combination of hosts) is generating the load. Once the host has been identified, use the virtual machine counters to identify which virtual machine is generating the traffic. If it is an application or service on the host OS, stop it then contact the vendor for a fix or uninstall it - our purpose here is running virtual machines securely, fast and reliably - anything that interferes needs to be carefully evaluated.
 * Threshold: no threshold - use this for getting a baseline and for capacity planning.
@@ -69,7 +69,7 @@ This is a continuation of a series on Hyper-V performance monitoring. The previo
     * **Hyper-V Virtual Storage Device(*)\Read Bytes/sec**
     * **Hyper-V Virtual Storage Device(*)\Write Bytes/sec**
 
-### IOPS(or equivalent):
+## IOPS(or equivalent):
 
 * Why: This can be useful information when troubleshooting disk latency and idle time issues. For any shared storage where performance issues are being seen by any device accessing the storage, it is important to identify which host (or combination of hosts) is generating the load. Storage teams also like to use these numbers for comparison purposes.
 * Threshold: no threshold - use this for getting a baseline and for capacity planning.

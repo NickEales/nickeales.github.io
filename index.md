@@ -1,10 +1,11 @@
 ---
 layout: default
 ---
+# Nick Eales' blog
 
 [About](./about.md)
 
-# contents
+## contents
 
 - (2018-02-14) - [install highly available scvmm 2016 using sql always on](./2018-02-14-install-highly-available-scvmm-2016-using-sql-always-on.md).
 - (2018-01-23) - [Create VMM template for ubuntu 16-04](./2018-01-23-create-vmm-template-for-ubuntu-16-04.md)

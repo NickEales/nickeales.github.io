@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title:  "Use Custom Script Extension to Sysprep an Azure VM"
 date:   2017-03-13 21:42:46 +1000
 categories: Azure KeyVault Certificates PowerShell

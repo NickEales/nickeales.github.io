@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title:  "Hyper-V Performance – Memory"
 date:   2016-11-22 12:00:00 +1000
 categories: Hyper-V Performance Memory
@@ -9,7 +9,7 @@ Memory performance in Hyper-V environments is a mix of availability, ensuring Vi
 <!--more-->
 This is a continuation of a series on Hyper-V performance monitoring. The previous posts covered CPU and storage performance, This post is on Memory performance, and the remaining post will cover network performance.
 
-### Host Available Memory
+## Host Available Memory
 
 * Counter: **Hyper-V Dynamic Memory Balancer\Available Memory**
 * Why: This is the memory available for virtual machine usage on a Hyper-V host, while ensuring that there is sufficient memory available for Hardware and Hyper-V management.
@@ -20,7 +20,7 @@ This is a continuation of a series on Hyper-V performance monitoring. The previo
   * Check Dynamic Memory is responding on virtual machines enabled for Dynamic Memory (a value for the "Average Pressure" value provides that).
   * Reduce memory usage on hosts (load balance VMs between hosts?)
 
-### Virtual Machine Memory Pressure
+## Virtual Machine Memory Pressure
 
 * Counter: **Hyper-V Dynamic Memory VM(*)\Average Pressure**
 * Threshold: Any Instance > 85% sustained > 1 min. (Note this thresholds assumes the default buffer setting of 20% - adjust this threshold on a per virtual machine basis if the buffer value is modified)
@@ -30,7 +30,7 @@ For virtual machines using dynamic memory, Hyper-V should maintain this at "100 
   * Check each virtual machine's max memory settings (vs how much has been allocated to the virtual machine)
   * Check overall host available memory
 
-### Virtual Machine Allocated Memory
+## Virtual Machine Allocated Memory
 
 * Counter: **Hyper-V Dynamic Memory VM(*)\Physical Memory**
 * Threshold:
@@ -41,7 +41,7 @@ For virtual machines using dynamic memory, Hyper-V should maintain this at "100 
   * identify if the dynamic memory maximum value for the virtual machine needs to be increased
   * check the memory usage by the virtual machine is expected.
 
-### Remote NUMA Memory Node Access
+## Remote NUMA Memory Node Access
 
 * Counter: **Hyper-V Vm Vid Partition(*)\Remote Physical Pages**
 * Threshold: > 100 (and increasing by at least 100/hour). Note that this value will reset if the VM is restarted or migrated to a different host.

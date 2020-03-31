@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title:  "Azure Automation Webhook parameter passing"
 date:   2017-02-14 12:00:00 +1000
 categories: Azure Automation PowerShell
@@ -10,7 +10,7 @@ Recently I was exploring the use of webhooks & needed to troubleshoot the parame
 
 This is the Azure Automation PowerShell runbook that I used to display what was being passed to the webhook:
 
-```
+```powershell
 param (
     [object]$WebhookData
 )

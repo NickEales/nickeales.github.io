@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title:  "Hyper-V Performance – Network"
 date:   2017-01-24 12:00:00 +1000
 categories: Hyper-V Performance Network
@@ -9,7 +9,7 @@ Network monitoring in a Hyper-V environment depends very heavily on the configur
 <!--more-->
 This is a continuation of a series on Hyper-V performance monitoring. The previous posts covered CPU, Storage and Memory performance, This post is on network performance.
 
-### Physical network adapter throughput
+## Physical network adapter throughput
 
 * Counter: **Network Interface\Bytes Total/sec**
 * Why: This show how busy each physical NIC is.
@@ -25,7 +25,7 @@ This is a continuation of a series on Hyper-V performance monitoring. The previo
     * increase capacity (more / faster NICs & switches)
     * Reduce load by shifting workloads to other hosts
 
-### Virtual Machine Network throughput
+## Virtual Machine Network throughput
 
 * Counter: **Hyper-V Virtual Network Adapter\Bytes/sec**
 * Why: This shows the network throughput for each VM Network adapter. This can be used for capacity planning and for load tracking purposes.
