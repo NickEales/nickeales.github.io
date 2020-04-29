@@ -1,7 +1,0 @@
-bash
-
-cd blog
-#test
-bundle exec jekyll serve
-#build
-bundle exec jekyll build
