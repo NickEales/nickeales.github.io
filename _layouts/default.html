@@ -37,9 +37,9 @@
         {{ content }}
       </section>
     </div>
-
+<br>test<br>
     <!-- COMMENTS - Added to template by Nick -->
-    {% raw %}{% if page.comments == true %}
+    {% raw %}{% if page.comments != false %}
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = '{{ site.disqus_shortname }}';
