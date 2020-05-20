@@ -3,3 +3,5 @@ title: Nick Eales’ blog
 description: Hoping to save someone some time (including myself)
 show_excerpts: true
 disqus_shortname: nickealesblog
+disqus:
+    shortname: nickealesblog
