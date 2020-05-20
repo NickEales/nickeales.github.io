@@ -3,7 +3,6 @@ layout: default
 title:  "Don't apologise for not knowing something in Azure"
 date:   2020-05-19 12:00:00 +1000
 categories: Azure
-comments: true
 excerpt_separator: <!--more-->
 ---
 # Don't apologise for not knowing something about Azure
