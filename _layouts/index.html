@@ -44,12 +44,8 @@
         {% endfor %}
       </ul>
   
-    </div>
-
-
-<br>test<br>
     <!-- COMMENTS - Added to template by Nick -->
-    {% raw %}{% if page.comments != false %}
+    {% if page.comments %}
     <div id="disqus_thread"></div>
     <script type="text/javascript">
       var disqus_shortname  = '{{ site.disqus_shortname }}';
@@ -62,7 +58,10 @@
       })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    {% endif %}{% endraw %}
+    {% endif %}
+    </div>
+
+<br>test<br>
     
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
