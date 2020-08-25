@@ -5,7 +5,7 @@ page.comments: true
 ---
 [TOC]
 
-# Display Certificate info of remote https connection
+# Display Certificate info of remote HTTPS connection
 
 I recently had a need to check the certificate being returned by a remote SSL Connection - this is mostly to check for any impact of a proxy server replacing the SSL cert.
 
