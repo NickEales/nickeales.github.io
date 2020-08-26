@@ -1,5 +1,5 @@
 ---
-layout: index
+layout: default
 date:   2020-08-25 12:00:00 +1000
 page.comments: true
 comments: true
