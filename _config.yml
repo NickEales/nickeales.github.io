@@ -4,4 +4,8 @@ description: Hoping to save someone some time (including myself)
 show_excerpts: true
 disqus_shortname : "nickealesblog"
 repo: "nickeales/nickeales.github.io"
+github: 
+    is_project_page: true
+    owner_url: nickeales.github.io
+    owner_name: Nick Eales
 baseurl: "nickeales.github.io"
