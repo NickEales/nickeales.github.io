@@ -47,9 +47,18 @@
       last updated {{ site.time }} (UTC)
   
     {% if page.comments %}
+    <script src="https://utteranc.es/client.js"
+    repo="{{ site.baseurl }}"
+    issue-term="pathname"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+    </script>
+
     <div id="disqus_thread"></div>
     Comment section
-    <script type="text/javascript">
+  <!-- 
+      <script type="text/javascript">
       var disqus_shortname  = '{{ site.disqus_shortname }}';
       var disqus_identifier = '{{ page.url }}';
 
@@ -60,6 +69,7 @@
       })();
     </script>
     <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    -->
     {% endif %}
     </div>
 
