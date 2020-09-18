@@ -21,6 +21,9 @@ nmap -p 443 --script ssl-cert www.bing.com
 #Alternate command if using proxy:
 nmap -p 443 --proxy <ProxyAddress>:<ProxyPort> --script ssl-cert www.bing.com
 
+#to show full certificate chain (press ctrl-c to get back to prompt):
+openssl s_client -showcerts -connect www.microsoft.com:443
+
 ```
 
 ## Windows (PowerShell)
