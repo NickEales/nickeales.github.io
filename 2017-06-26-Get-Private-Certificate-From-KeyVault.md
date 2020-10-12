@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: index
 description: "No longer working method of downloading a X509 Pkcs12 (Windows) private certificate from keyvault"
 excerpt_separator: <!--more-->
 date:   2017-06-26 21:42:46 +1000
@@ -11,7 +11,7 @@ categories: Azure KeyVault Certificates PowerShell
 <!--more-->
 
 **NB: You can now export the private key using the provided tools (eg - the CLI):**
-https://docs.microsoft.com/en-us/azure/key-vault/certificates/how-to-export-certificate
+[https://docs.microsoft.com/en-us/azure/key-vault/certificates/how-to-export-certificate]
 
 
 ---
@@ -28,7 +28,7 @@ Key Vault can generate self-signed certificates using the New-AzureKeyVaultCerti
 - the below script assumes that you have authenticated to Key Vault and have permissions for the get operation.
 
 ** NOTE - this method doesn't work anymore - use the provided tools instead here:
-https://docs.microsoft.com/en-us/azure/key-vault/certificates/how-to-export-certificate
+[https://docs.microsoft.com/en-us/azure/key-vault/certificates/how-to-export-certificate]
 
 anyway.. some code to get private certificates and make them available for a few difference purposes (the main point of this post):
 
