@@ -10,6 +10,10 @@ categories: Azure KeyVault Certificates PowerShell
 ** Note: This method of method of downloading a X509 Pkcs12 (Windows) private certificate from keyvault no longer works.
 <!--more-->
 
+**NB: You can now export the private key using the provided tools (eg - the CLI):**
+https://docs.microsoft.com/en-us/azure/key-vault/certificates/how-to-export-certificate
+
+
 ---
 
 ~~Getting a certificate from key vault using PowerShell – while it isn’t obvious also isn’t hard.~~
@@ -23,10 +27,12 @@ Key Vault can generate self-signed certificates using the New-AzureKeyVaultCerti
 - Access to run each cmdlet is governed through a range of access policies. E.g. ‘Get’ rights on ‘secret’ objects lets you get a secret (e.g. by running Get-AzureKeyVaultSecret with ’-name’), and ‘List’ rights on ‘key’ objects lets you list the keys (e.g. by running Get-AzureKeyVaultKey without ’-name’).
 - the below script assumes that you have authenticated to Key Vault and have permissions for the get operation.
 
-** NOTE - this method doesn't work anymore
+** NOTE - this method doesn't work anymore - use the provided tools instead here:
+https://docs.microsoft.com/en-us/azure/key-vault/certificates/how-to-export-certificate
 
 anyway.. some code to get private certificates and make them available for a few difference purposes (the main point of this post):
 
+``` PowerShell
         #get Secret object (Containing private key) from Key Vault
         $AzureKeyVaultSecret=Get-AzureKeyVaultSecret -VaultName $VaultName -Name $CertificateName -ErrorAction SilentlyContinue
 
@@ -62,6 +68,7 @@ anyway.. some code to get private certificates and make them available for a few
         #Optional: Export encrypted certificate to file on desktop:
         $pfxPath = '{0}\{1}.pfx' -f [Environment]::GetFolderPath("Desktop") ,$CertificateName
         [System.IO.File]::WriteAllBytes($pfxPath, $protectedCertificateBytes)
+```
 
 While the above example is for getting a private certificate, getting a public certificate is similar & simpler. (use Get-AzureKeyVaultKey instead / a slight change to the flags if importing it locally / no need to encrypt if exporting to a .CER file).
 
